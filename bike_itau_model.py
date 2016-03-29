@@ -2,6 +2,7 @@ from sqlalchemy import Column, DateTime, String, Integer, Boolean, Float, Foreig
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
 import datetime
+import os
  
  
 Base = declarative_base()
@@ -34,7 +35,8 @@ class MovimentacaoBikeItau(Base):
  
  
 from sqlalchemy import create_engine
-engine = create_engine('sqlite:////home/andrew/bike_itau/bike_itau.sqlite')
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+engine = create_engine('sqlite:///bike_itau.sqlite')
 engine.connect().connection.connection.text_factory = str
  
 from sqlalchemy.orm import sessionmaker
