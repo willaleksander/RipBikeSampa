@@ -2,6 +2,21 @@ import urllib2
 from bike_itau_model import *
 import unicodedata
 
+
+def verificaUltimaMovimentacao(session, idEstacao, vagasDisponiveis):
+	obj = MovimentacaoBikeItau()
+
+	obj = session.query(MovimentacaoBikeItau).filter(MovimentacaoBikeItau.idEstacao == idEstacao).order_by(MovimentacaoBikeItau.id.desc()).first()
+
+	if (obj == None):
+		print("True None")
+		return True
+
+	if (vagasDisponiveis == obj.vagasDisponiveis):
+		return False
+
+	return True
+
 	
 if __name__ == '__main__':
 	response = urllib2.urlopen('http://ww2.mobilicidade.com.br/bikesampa/mapaestacao.asp')
@@ -27,10 +42,11 @@ if __name__ == '__main__':
 			
 			movimentacao.vagasDisponiveis = estacao.numBicicletas - movimentacao.vagasOcupadas
 			movimentacao.idEstacao = estacao.idEstacao
+
 			s.merge(estacao)
-			s.merge(movimentacao)
+
+			if (verificaUltimaMovimentacao(s, movimentacao.idEstacao, movimentacao.vagasDisponiveis)):
+				s.merge(movimentacao)
 
 	s.commit()
 	s.close()
-	
-
