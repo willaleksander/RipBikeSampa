@@ -1,6 +1,7 @@
 import urllib2
 from bike_itau_model import *
 import unicodedata
+import datetime
 
 
 def verificaUltimaMovimentacao(session, idEstacao, vagasDisponiveis):
@@ -9,13 +10,15 @@ def verificaUltimaMovimentacao(session, idEstacao, vagasDisponiveis):
 	obj = session.query(MovimentacaoBikeItau).filter(MovimentacaoBikeItau.idEstacao == idEstacao).order_by(MovimentacaoBikeItau.id.desc()).first()
 
 	if (obj == None):
-		print("True None")
 		return True
 
-	if (vagasDisponiveis == obj.vagasDisponiveis):
-		return False
+	if (vagasDisponiveis != obj.vagasDisponiveis):
+		return True
 
-	return True
+	if (datetime.datetime.now().hour > obj.timestamp.hour):
+		return True
+
+	return False
 
 	
 if __name__ == '__main__':
