@@ -15,4 +15,7 @@ Tente: pip install sqlalchemy
 De permissões de acesso para a pasta.  
 
 Adicione a execução do servico.py ao cron do seu Linux, digite: "crontab -e"  
-Adicione essa linha no arquivo "1 6-22 * * * python (caminho_do_projeto)/servico.py" assim ele executará minuto a minuto das 6h as 22h todos os dias.
+Adicione essas linhas no arquivo:
+"* 6-21 * * * python (caminho_do_projeto)/servico.py" 
+"1 22 * * * python (caminho_do_projeto)/servico.py"
+assim ele executará minuto a minuto das 6h as 21:59h e 1x as 22h todos os dias.

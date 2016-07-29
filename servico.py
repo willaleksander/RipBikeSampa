@@ -15,7 +15,7 @@ def verificaUltimaMovimentacao(session, idEstacao, vagasDisponiveis):
 	if (vagasDisponiveis != obj.vagasDisponiveis):
 		return True
 
-	if (datetime.datetime.now().hour > obj.timestamp.hour):
+	if (datetime.datetime.now().hour != obj.timestamp.hour):
 		return True
 
 	return False
